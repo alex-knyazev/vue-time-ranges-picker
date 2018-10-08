@@ -1,40 +1,66 @@
 <template>
   <div class="hello">
-    <svg viewBox="0 0 140 140" class="circular-chart">
-      <path class="circle3"
-        stroke-dasharray="360, 360"
-        stroke-width="6"
-        d="M70 12.74025
-          a 57.2958 57.2958 0 0 1 0 114.5915
-          a 57.2958 57.2958 0 0 1 0 -114.5915"
+    <svg 
+      :viewBox="`0 0 ${viewBoxSize} ${viewBoxSize}`" 
+      class="circular-chart"
+    >
+      <!-- scales -->
+      <path
+        v-for="timePoint in timePoints"
+        :key="timePoint.name"
+        :stroke-dasharray="`${timePoint.hourDegree}, ${circleInputLength}`"
+        :stroke-width="strokeWidth"
+        :style="{stroke: timePoint.scaleColor}"
+        :d="`M${viewBoxSize/2} ${viewBoxSize/2 - circleInputRadius}
+          a ${circleInputRadius} ${circleInputRadius} 0 0 1 0 ${circleInputDiameter}
+          a ${circleInputRadius} ${circleInputRadius}  0 0 1 0 ${-circleInputDiameter}`"
+        class="input-scale"
       />
-      <path class="circle2"
-        stroke-dasharray="150, 360"
-        stroke-width="6"
-        d="M70 12.74025
-          a 57.2958 57.2958 0 0 1 0 114.5915
-          a 57.2958 57.2958 0 0 1 0 -114.5915"
-      />
-      <path class="circle"
-        stroke-dasharray="30, 360"
-        stroke-width="6"
-        d="M70 12.74025
-          a 57.2958 57.2958 0 0 1 0 114.5915
-          a 57.2958 57.2958 0 0 1 0 -114.5915"
-      />
+      <!-- time marks around input -->
       <g class="marks">
         <circle 
           v-for="mark in marks" 
           :key="mark.name"
-          cx="67.1" 
-          y1="0"
-          style="fill: grey;"
+          :style="{
+            fill: 'grey', 
+            transform: 'rotate(calc('+ mark.name + ' * 15deg))'
+          }"
+          cx="0" 
+          cy="-67.1"
           r="1.5"
         />
-        <circle class="circle-picker  circle-picker-1" cx="0" cy="-57.2958" r="5" style="fill: fuchsia;"/>
-        <circle class="circle-picker circle-picker-2" cx="0" cy="-57.2958" r="5" style="fill: fuchsia;"/>
-        <circle class="circle-picker circle-picker-3" cx="0" cy="-57.2958" r="5" style="fill: fuchsia;"/>
       </g>
+      <filter id="dropshadow" height="130%">
+        <feGaussianBlur in="SourceAlpha" stdDeviation="0.49"/> <!-- stdDeviation is how much to blur -->
+        <feOffset dx="0" dy="0" result="offsetblur"/> <!-- how much to offset -->
+        <feComponentTransfer>
+          <feFuncA type="linear" slope="0.35"/> <!-- slope is the opacity of the shadow -->
+        </feComponentTransfer>
+        <feMerge> 
+          <feMergeNode/> <!-- this contains the offset blurred image -->
+          <feMergeNode in="SourceGraphic"/> <!-- this contains the element that the filter is applied to -->
+        </feMerge>
+      </filter>
+      <g class="time-points">
+
+        <circle
+          v-for="timePoint in timePoints"
+          :key="timePoint.name"
+          :id="timePoint.name"
+          class="time-pointer"
+          cx="0"
+          :cy="-circleInputRadius"
+          :style="{
+            transform: 'rotate(calc('+ timePoint.hourDegree + 'deg))'
+          }"
+          filter="url(#dropshadow)"
+          r="6"
+          @pointerdown="handleMoveStart"
+          @pointermove="handleMove"
+          @pointerup="hanleMoveEnd"
+        /> 
+      </g>
+
     </svg>
   </div>
 </template>
@@ -47,12 +73,59 @@ export default {
   },
 
   data() {
-    let marks = [];
-    for (let i = 0; i < 24; i++) {
-      marks[i] = { name: i }
+    const circleInputLength = 360;
+    const hoursAmount = 24;
+    const circleInputRadius = circleInputLength / ( 2* Math.PI);
+    const circleInputDiameter = circleInputRadius * 2;
+
+    const strokeWidth = 6;
+    const marks = [];
+    for (let i = 0; i < hoursAmount; i++) {
+      marks.push({ name: i + 1 });
     }
+
+    let timePoints = [
+      {
+        name: 'point-3',
+        currentHour: 24,
+        scaleColor: '#f6e046'
+      },
+      {
+        name: 'point-2',
+        currentHour: 6,
+        scaleColor: '#00ff1f'        
+      },
+      {
+        name: 'point-1',
+        currentHour: 2,
+        scaleColor: 'blue',
+      }, 
+    ];
+
+    const oneHourDegree = circleInputLength / hoursAmount;
+    timePoints = timePoints.map(tp => ({...tp, hourDegree: tp.currentHour * oneHourDegree }))
+
     return {
+      viewBoxSize: 140,
       marks,
+      timePoints,
+      circleInputLength,
+      circleInputRadius,
+      circleInputDiameter,
+      strokeWidth
+    }
+  },
+
+  methods: {
+    handleMoveStart(e) {
+      // console.log('start', e.pageX, e.pageY);
+    },
+    handleMove(e) {
+      console.log(e.target.id);
+      console.log('process', e.offsetX, e.offsetY);
+    },
+    hanleMoveEnd(e) {
+      // console.log('end', e.pageX, e.pageY);
     }
   }
 }
@@ -60,91 +133,11 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.marks {
+.marks,
+.time-points {
+  /* relocate marks group to center of picker*/
   transform: translate(70px, 70px);
   stroke-width: 0.2;
-}
-
-.marks > circle:nth-child(1) {
-  transform: rotate(15deg);
-}
-.marks > circle:nth-child(2) {
-  transform: rotate(calc(2 * 15deg));
-}
-.marks > circle:nth-child(3) {
-  transform: rotate(calc(3 * 15deg));
-  stroke-width: 0.5;
-}
-.marks > circle:nth-child(4) {
-  transform: rotate(calc(4 * 15deg));
-}
-.marks > circle:nth-child(5) {
-  transform: rotate(calc(5 * 15deg));
-}
-.marks > circle:nth-child(6) {
-  transform: rotate(calc(6 * 15deg));
-  stroke-width: 0.5;
-}
-.marks > circle:nth-child(7) {
-  transform: rotate(calc(7 * 15deg));
-}
-.marks > circle:nth-child(8) {
-  transform: rotate(calc(8 * 15deg));
-}
-.marks > circle:nth-child(9) {
-  transform: rotate(calc(9 * 15deg));
-  stroke-width: 0.5;
-}
-.marks > circle:nth-child(10) {
-  transform: rotate(calc(10 * 15deg));
-}
-.marks > circle:nth-child(11) {
-  transform: rotate(calc(11 * 15deg));
-}
-.marks > circle:nth-child(12) {
-  transform: rotate(calc(12 * 15deg));
-  stroke-width: 0.5;
-}
-
-.marks > circle:nth-child(13) {
-  transform: rotate(calc(13 * 15deg));
-}
-.marks > circle:nth-child(14) {
-  transform: rotate(calc(14 * 15deg));
-}
-.marks > circle:nth-child(15) {
-  transform: rotate(calc(15 * 15deg));
-  stroke-width: 0.5;
-}
-.marks > circle:nth-child(16) {
-  transform: rotate(calc(16 * 15deg));
-}
-.marks > circle:nth-child(17) {
-  transform: rotate(calc(17 * 15deg));
-}
-.marks > circle:nth-child(18) {
-  transform: rotate(calc(18 * 15deg));
-  stroke-width: 0.5;
-}
-.marks > circle:nth-child(19) {
-  transform: rotate(calc(19 * 15deg));
-}
-.marks > circle:nth-child(20) {
-  transform: rotate(calc(20 * 15deg));
-}
-.marks > circle:nth-child(21) {
-  transform: rotate(calc(21 * 15deg));
-  stroke-width: 0.5;
-}
-.marks > circle:nth-child(22) {
-  transform: rotate(calc(22 * 15deg));
-}
-.marks > circle:nth-child(23) {
-  transform: rotate(calc(23 * 15deg));
-}
-.marks > circle:nth-child(24) {
-  transform: rotate(calc(24 * 15deg));
-  stroke-width: 0.5;
 }
 
 .circular-chart {
@@ -154,37 +147,29 @@ export default {
   max-height: 300px;
 }
 
-.circle {
-  stroke: blue;
+.input-scale {
   fill: none;
   stroke-width: 7;
   stroke-linecap: round;
   animation: progress 1s ease-out forwards;
 }
 
-.circle2 {
-  stroke: #00ff1f;
-  fill: none;
-  stroke-width: 7;
-  stroke-linecap: round;
-  animation: progress 1s ease-out forwards;
+.time-pointer {
+  cursor: pointer;
+  fill: white;
+  stroke-width: 3px;
 }
 
-.circle3 {
-  stroke: #f6e046;
-  fill: none;
-  stroke-width: 7;
-  stroke-linecap: round;
-  animation: progress 1s ease-out forwards;
+.time-pointer:hover {
+  fill: rgba(240, 240, 240, 0.9);
 }
 
-.circle-picker-1 {
-  transform: rotate(calc(2 * 15deg));
+#point-1 {
 }
-.circle-picker-2 {
+#point-2 {
   transform: rotate(calc(10 * 15deg));
 }
-.circle-picker-3 {
+#point-3 {
   transform: rotate(calc(24 * 15deg));
 }
 /* @keyframes progress {
