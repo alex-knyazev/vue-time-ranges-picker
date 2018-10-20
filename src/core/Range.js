@@ -3,7 +3,7 @@ import { getTimeCoordinates } from './helpers';
 
 class Range {
   constructor(args) {
-    const { startMovePointer, endMovePointer, scaleColor, hoursAmount } = args;
+    const { startMovePointer, endMovePointer, scaleColor } = args;
     const arcs = this.createArcs(startMovePointer, endMovePointer);
     this.name = startMovePointer.name + '-' + endMovePointer.name + '-range';
     this.startMovePointer = startMovePointer;
