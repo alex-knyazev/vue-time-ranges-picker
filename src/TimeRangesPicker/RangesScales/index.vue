@@ -15,8 +15,8 @@
           M${arc.start.x},${arc.start.y} 
           A${circleRadius},${circleRadius} 
           0 0 1 ${arc.end.x}, ${arc.end.y}`"
+        :stroke-width="circleStrokeWidth"
         fill="transparent" 
-        stroke-width="8"
       />
     </g>
   </g>

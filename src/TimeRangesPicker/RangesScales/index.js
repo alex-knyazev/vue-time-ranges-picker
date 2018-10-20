@@ -7,6 +7,10 @@ export default {
       type: Array,
       required: true,
     },
+    circleStrokeWidth: {
+      type: Number,
+      required: true,
+    },
   },
 
   data() {

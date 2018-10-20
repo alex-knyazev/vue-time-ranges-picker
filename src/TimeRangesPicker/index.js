@@ -44,6 +44,15 @@ export default {
     };
   },
 
+  computed: {
+    combinedViewOptions() {
+      return {
+        ...DEFAULT_VIEW_OPTIONS,
+        ...this.viewOptions,
+      };
+    },
+  },
+
   created() {
     this.getInfoFromValue(this.value);
   },

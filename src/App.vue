@@ -1,7 +1,11 @@
 <template>
   <div id="app">
     <div class="time-picker-wrapper">
-      <TimeRangesPicker :value="timeRanges" :isTwelfthMode="isTwelfthMode" @input="handleInput" />
+      <TimeRangesPicker 
+        :value="timeRanges" 
+        :isTwelfthMode="isTwelfthMode" 
+        @input="handleInput" 
+      />
     </div>
   </div>
 </template>

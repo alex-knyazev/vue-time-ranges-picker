@@ -14,28 +14,29 @@
       <!-- group with set of svg-paths drawing arcs -->
       <RangesScales 
         :ranges="ranges" 
+        :circleStrokeWidth="combinedViewOptions.circleStrokeWidth"
       />
 
       <!-- hours marks around circle -->
       <HoursMarks
-        :hoursMarksColor="viewOptions.hoursMarksColor"
+        :hoursMarksColor="combinedViewOptions.hoursMarksColor"
       />
 
       <!-- quarter hours labels inside circle --> 
       <QuartersTexts
         :isTwelfthMode="isTwelfthMode"
-        :quarterTextColor="viewOptions.quarterTextColor"
+        :quarterTextColor="combinedViewOptions.quarterTextColor"
       />
       
       <!-- buttons on circle to change ranges --> 
       <ChosenTimePointers 
         :isTwelfthMode="isTwelfthMode"
         :movePointers="movePointers"
-        :chosenTimeColor="viewOptions.chosenTimeColor"
-        :pointerColor="viewOptions.pointerColor"
-        :activePointerColor="viewOptions.activePointerColor"
-        :pointerRadius="viewOptions.pointerRadius"
-        :activePointerRadius="viewOptions.activePointerRadius"
+        :chosenTimeColor="combinedViewOptions.chosenTimeColor"
+        :pointerColor="combinedViewOptions.pointerColor"
+        :activePointerColor="combinedViewOptions.activePointerColor"
+        :pointerRadius="combinedViewOptions.pointerRadius"
+        :activePointerRadius="combinedViewOptions.activePointerRadius"
         @startMove="handleStartMove"
       />
 
