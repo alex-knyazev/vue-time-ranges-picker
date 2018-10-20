@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <!-- <Test :testData="testData"/> -->
     <div class="time-picker-wrapper">
       <TimeRangesPicker :value="timeRanges" :isTwelfthMode="isTwelfthMode" @input="handleInput" />
     </div>
