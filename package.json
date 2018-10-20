@@ -20,10 +20,10 @@
     "name": "Alex Knyazev",
     "email": "alex.knyazev.world@gmail.com"
   },
-  "homepage": "https: //github.com/alex-knyazev/vue-time-ranges-picker",
+  "homepage": "https://github.com/alex-knyazev/vue-time-ranges-picker",
   "repository": {
     "type": "git",
-    "url": "https: //github.com/alex-knyazev/vue-time-ranges-picker"
+    "url": "https://github.com/alex-knyazev/vue-time-ranges-picker"
   },
   "dependencies": {
     "add-zero": "^1.0.0",
