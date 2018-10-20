@@ -1,6 +1,6 @@
 # Vue-time-ranges-picker
 
-Vue.js component to select the time intervals of the day.
+Vue.js component to select the time intervals of the day. Try it: https://alex-knyazev.github.io/vue-time-ranges-picker/
 
 ```
 npm install vue-time-ranges-picker
