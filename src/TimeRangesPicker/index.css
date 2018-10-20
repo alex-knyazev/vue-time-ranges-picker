@@ -1,0 +1,46 @@
+.range-picker-container {
+  height: 100%;
+}
+
+.marks,
+.hours-marks,
+.time-points {
+  stroke-width: 0.2;
+}
+
+.circular-chart {
+  display: block;
+
+  width: 100%;
+  height: inherit;
+
+  user-select: none;
+}
+
+.input-scale {
+  animation: progress 1s ease-out forwards;
+
+  fill: none;
+  stroke-width: 7;
+  stroke-linecap: round;
+}
+
+.time-pointer {
+  cursor: pointer;
+
+  fill: white;
+  stroke-width: 3px;
+  r: 6;
+}
+
+.time-pointer_active {
+  fill: rgba(240, 240, 240, 0.9);
+  r: 5.4;
+}
+
+.choose-time {
+  font-size: 7px;
+  font-weight: 500;
+
+  fill: var(--text_color_dark);
+}

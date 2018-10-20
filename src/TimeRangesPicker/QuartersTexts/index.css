@@ -1,0 +1,9 @@
+.quarter-texts {
+  transform: translateY(3px);
+}
+
+.hour {
+  transform: translateY(3px);
+
+  font-size: 7px;
+}

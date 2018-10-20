@@ -1,0 +1,28 @@
+.time-points {
+  stroke-width: 0.2;
+}
+
+.circular-chart {
+  display: block;
+
+  width: 100%;
+  height: inherit;
+
+  user-select: none;
+}
+
+.time-pointer {
+  cursor: pointer;
+
+  fill: white;
+  stroke-width: 3px;
+}
+
+.time-pointer_active {
+  fill: rgba(240, 240, 240, 0.9);
+}
+
+.chosen-time {
+  font-size: 7px;
+  font-weight: 600;
+}
