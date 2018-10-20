@@ -45,28 +45,6 @@ export default {
     }
   },
 
-  created() {
-    // setTimeout(() => {
-    //   this.timeRanges = [
-    //     {
-    //       startTime: '03:00',
-    //       endTime: '08:00',
-    //       scaleColor: 'violet',
-    //     },
-    //     {
-    //       startTime: '08:00',
-    //       endTime: '09:00',
-    //       scaleColor: 'yellow',
-    //     },
-    //     {
-    //       startTime: '09:00',
-    //       endTime: '03:00',
-    //       scaleColor: 'aquamarine',
-    //     }
-    //   ]
-    // }, 3000);
-  },
-
   methods: {
     handleInput(value) {
       console.log(value);
@@ -83,17 +61,16 @@ export default {
   margin-top: 60px;
 
   text-align: center;
-
-  color: #2c3e50;
-
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 .time-picker-wrapper {
-  width: 600px;
-  height: 400px;
+  position: absolute;
+  top: 10%;
+  left: 50%;
+
+  width: 400px;
+  height: 350px;
+
+  transform: translateX(-50%);
 }
 </style>
