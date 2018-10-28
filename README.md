@@ -51,7 +51,7 @@ export default {
 
 ## Props
 
-### value :array<object>
+### value :arrayOf(object)
 
 The array which contains default intervals of time with scale color for each of them.
 
