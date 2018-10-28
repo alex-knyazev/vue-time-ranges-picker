@@ -6,24 +6,27 @@
       ref="input-viewbox"
       :viewBox="`0 0 ${viewBoxSize} ${viewBoxSize}`"
       class="circular-chart"
+      @pointerdown="handleStartMove"
       @pointermove="handleMove"
       @pointerup="handleEndMove"
       @mouseleave="handleEndMove"
       @mouseup="handleEndMove"
     >
       <!-- group with set of svg-paths drawing arcs -->
-      <RangesScales 
+      <RangesScales
         :ranges="ranges" 
         :circleStrokeWidth="combinedViewOptions.circleStrokeWidth"
       />
 
       <!-- hours marks around circle -->
       <HoursMarks
+        v-if="combinedViewOptions.isShowHoursMarks"
         :hoursMarksColor="combinedViewOptions.hoursMarksColor"
       />
 
       <!-- quarter hours labels inside circle --> 
       <QuartersTexts
+        v-if="combinedViewOptions.isShowQuartersText"
         :isTwelfthMode="isTwelfthMode"
         :quarterTextColor="combinedViewOptions.quarterTextColor"
       />
@@ -37,6 +40,7 @@
         :activePointerColor="combinedViewOptions.activePointerColor"
         :pointerRadius="combinedViewOptions.pointerRadius"
         :activePointerRadius="combinedViewOptions.activePointerRadius"
+        :isShowChosenTime="combinedViewOptions.isShowChosenTime"
         @startMove="handleStartMove"
       />
 

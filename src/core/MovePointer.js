@@ -44,6 +44,10 @@ class MovePointer {
 
     this.controller.handlePointerMove(this, angleInDegrees);
   }
+
+  setRef(ref) {
+    this.ref = ref;
+  }
 }
 
 export default MovePointer;

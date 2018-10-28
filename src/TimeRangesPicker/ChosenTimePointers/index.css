@@ -10,6 +10,8 @@
 .time-pointer {
   cursor: pointer;
 
+  outline: none;
+
   fill: white;
   stroke-width: 3px;
 }

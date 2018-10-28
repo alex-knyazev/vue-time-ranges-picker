@@ -33,6 +33,10 @@ export default {
       type: Number,
       required: true,
     },
+    isShowChosenTime: {
+      type: Boolean,
+      required: true,
+    },
   },
 
   data() {
@@ -43,11 +47,31 @@ export default {
     };
   },
 
+  mounted() {
+    this.updateAbsoluteCoordinates();
+  },
+
   methods: {
     timeNumberToText,
 
     handleStartMove(e) {
       this.$emit('startMove', e);
+    },
+
+    updateAbsoluteCoordinates() {
+      for (let i = 0; i < this.movePointers.length; i++) {
+        const movePointer = this.movePointers[i];
+        const refName = Object.keys(this.$refs).find(refName => {
+          if (refName === movePointer.name) {
+            return true;
+          }
+        });
+        if (!refName) {
+          continue;
+        }
+        const ref = this.$refs[refName][0];
+        movePointer.setRef(ref);
+      }
     },
   },
 };

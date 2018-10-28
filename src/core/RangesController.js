@@ -5,7 +5,9 @@ import MovePointer from './MovePointer';
 import Range from './Range.js';
 
 class RangesController {
-  constructor(rangesData) {
+  constructor(rangesData, stepOfMoving) {
+    this.stepOfMoving = stepOfMoving;
+
     const movePointers = rangesData.map((pointerData, index) => {
       const { startTime } = pointerData;
       return new MovePointer({
@@ -26,6 +28,10 @@ class RangesController {
         scaleColor,
       });
     });
+  }
+
+  setStepOfMoving(stepValue) {
+    this.stepOfMoving = stepValue;
   }
 
   setBasicVector(center) {
@@ -90,9 +96,9 @@ class RangesController {
 
   getNewPointerData(degree) {
     let newDegree;
-    const moveStep = 0.5;
+    const { stepOfMoving } = this;
 
-    const stepDegree = ONE_HOUR_DEGREE * moveStep;
+    const stepDegree = ONE_HOUR_DEGREE * stepOfMoving;
     const halfStepDegree = stepDegree / 2;
     const remainder = degree % stepDegree;
     const floor = degree - remainder;
@@ -111,15 +117,16 @@ class RangesController {
   }
 
   checkIfMovingAllowed(movingTime, backBorderTime, forwardBorderTime) {
-    if (forwardBorderTime - backBorderTime > 0) {
-      if (movingTime - 0.5 <= backBorderTime || movingTime + 0.5 >= forwardBorderTime) {
+    if (forwardBorderTime >= backBorderTime) {
+      if (movingTime <= backBorderTime || movingTime >= forwardBorderTime) {
         return false;
       }
     } else {
-      if (movingTime - 0.5 <= backBorderTime && movingTime + 1 > forwardBorderTime) {
+      if (movingTime >= forwardBorderTime && movingTime <= backBorderTime) {
         return false;
       }
     }
+
     return true;
   }
 }

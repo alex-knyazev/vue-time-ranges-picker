@@ -7,6 +7,9 @@ export const CIRCLE_STROKE_WIDTH = 6;
 export const VIEW_BOX_SIZE = 180;
 
 export const DEFAULT_VIEW_OPTIONS = {
+  isShowChosenTime: true,
+  isShowQuartersText: true,
+  isShowHoursMarks: true,
   chosenTimeColor: 'grey',
   pointerColor: 'white',
   activePointerColor: 'rgba(240, 240, 240, 0.9)',
@@ -16,3 +19,6 @@ export const DEFAULT_VIEW_OPTIONS = {
   hoursMarksColor: 'grey',
   quarterTextColor: 'grey',
 };
+
+export const EXTRA_POINTER_RADIUS = 70;
+export const STEP_OF_MOVING = 0.5;

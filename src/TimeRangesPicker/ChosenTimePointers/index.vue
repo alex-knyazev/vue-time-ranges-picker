@@ -17,25 +17,29 @@
       </feMerge>
     </filter>
     <g>
-      <g
-        v-for="pointer in movePointers"
-        :key="pointer.name + '-text'"
-        :style="{
-          transform: `rotate(${pointer.coordinates.degree}deg) translate(${circleRadius + 12}px, 0px )`
-        }"
-      >
-        <text
+      <g v-if="isShowChosenTime">
+        <g
+          v-for="pointer in movePointers"
+          :key="pointer.name + '-text'"
           :style="{
-            'transform-origin': '7.8% -0.5%',
-            transform: `rotate(${-pointer.coordinates.degree}deg)`,
-            fill: chosenTimeColor
+            transform: `rotate(${pointer.coordinates.degree}deg) translate(${circleRadius + 12}px, 0px )`
           }"
-          class="chosen-time"
-        >{{ timeNumberToText(pointer.time, isTwelfthMode) }}</text>
+        >
+          <text
+            :style="{
+              'transform-origin': '7.8% -0.5%',
+              transform: `rotate(${-pointer.coordinates.degree}deg)`,
+              fill: chosenTimeColor
+            }"
+            class="chosen-time"
+          >{{ timeNumberToText(pointer.time, isTwelfthMode) }}</text>
+        </g>
       </g>
+      
                     
       <circle
         v-for="pointer in movePointers"
+        :ref="pointer.name"
         :key="pointer.name"
         :id="pointer.name"
         :cx="circleRadius"

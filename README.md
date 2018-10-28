@@ -49,69 +49,43 @@ export default {
 </script>
 ```
 
-Component works in two modes: twenty-four hours and twelve hours. Default is twenty four but you can provide isTwelfthMode prop:
+## Props
+
+### value :array<object>
+
+The array which contains default intervals of time with scale color for each of them.
+
+### isTwelfthMode :boolean, default: false
+
+Set this value to true if you want to work with picker in twelfth format. If it is true, data should be in twelfth format too.
+
+### stepOfMoving :number, default: 0.5
+
+This param controls the minimum hours step for moving.
+
+### extraPointerRadius :number, default: 70
+
+The user can't always get directly to the pointer to start the movement. The parameter is used to indicate an additional, invisible radius for the pointer, which, when hit, begins the movement.
+
+### viewOptions :object, default:
 
 ```
-<template>
-  <div>
-    <div class="time-picker-wrapper">
-      <TimeRangesPicker
-        :value="ranges"
-        isTwelfthMode
-        @change="handleRangesChange"
-      />
-    </div>
-  </div>
-</template>
-
-<script>
-import TimeRangesPicker from 'time-ranges-picker';
-
-export default {
-  data() {
-    return {
-      ranges: [
-        {
-          startTime: '12:00 AM',
-          endTime: '06:00 AM',
-          scaleColor: 'violet',
-        },
-        {
-          startTime: '06:00 AM',
-          endTime: '06:00 PM',
-          scaleColor: 'yellow',
-        },
-        {
-          startTime: '06:00 PM',
-          endTime: '00:00 AM',
-          scaleColor: 'aquamarine',
-        }
-      ]
-    }
-  }
+{
+  isShowChosenTime: true,
+  isShowQuartersText: true,
+  isShowHoursMarks: true,
+  chosenTimeColor: 'grey',
+  pointerColor: 'white',
+  activePointerColor: 'rgba(240, 240, 240, 0.9)',
+  pointerRadius: 6,
+  activePointerRadius: 5.5,
+  circleStrokeWidth: 8,
+  hoursMarksColor: 'grey',
+  quarterTextColor: 'grey',
 }
-</script>
 ```
 
-You can also pass some view options to rewrite default:
-
-```
-<TimeRangesPicker
-  :value="ranges"
-  :viewOptions="{
-    chosenTimeColor: 'grey',
-    pointerColor: 'white',
-    activePointerColor: 'rgba(240, 240, 240, 0.9)',
-    pointerRadius: 6,
-    activePointerRadius: 5.5,
-    circleStrokeWidth: 8,
-    hoursMarksColor: 'grey',
-    quarterTextColor: 'grey',
-  }"
-/>
-```
-
-This repo is project created by vue-cli. You can clone it to see example of component using.
+Different options for controlling the view of component. You can play with it in [demo](https://alex-knyazev.github.io/vue-time-ranges-picker/).
 
 ## Project setup
 

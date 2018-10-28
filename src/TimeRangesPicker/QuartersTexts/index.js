@@ -16,47 +16,54 @@ export default {
 
   data() {
     const offsetRadius = -15;
-    let quarterTexts = [
-      {
-        name: '06:00',
-        ...getTimeCoordinates(6, offsetRadius),
-      },
-      {
-        name: '12:00',
-        ...getTimeCoordinates(12, offsetRadius),
-      },
-      {
-        name: '06:00',
-        ...getTimeCoordinates(18, offsetRadius),
-      },
-      {
-        name: '12:00',
-        ...getTimeCoordinates(0, offsetRadius),
-      },
-    ];
-    if (this.isTwelfthMode) {
-      quarterTexts = [
+    return {
+      viewBoxSize: VIEW_BOX_SIZE,
+      offsetRadius,
+    };
+  },
+
+  computed: {
+    quarterTexts() {
+      const { offsetRadius } = this;
+      let quarterTexts = [
         {
-          name: '6 AM',
+          name: '06:00',
           ...getTimeCoordinates(6, offsetRadius),
         },
         {
-          name: '12 PM',
+          name: '12:00',
           ...getTimeCoordinates(12, offsetRadius),
         },
         {
-          name: '6PM',
+          name: '06:00',
           ...getTimeCoordinates(18, offsetRadius),
         },
         {
-          name: '12 AM',
+          name: '12:00',
           ...getTimeCoordinates(0, offsetRadius),
         },
       ];
-    }
-    return {
-      quarterTexts,
-      viewBoxSize: VIEW_BOX_SIZE,
-    };
+      if (this.isTwelfthMode) {
+        quarterTexts = [
+          {
+            name: '6 AM',
+            ...getTimeCoordinates(6, offsetRadius),
+          },
+          {
+            name: '12 PM',
+            ...getTimeCoordinates(12, offsetRadius),
+          },
+          {
+            name: '6PM',
+            ...getTimeCoordinates(18, offsetRadius),
+          },
+          {
+            name: '12 AM',
+            ...getTimeCoordinates(0, offsetRadius),
+          },
+        ];
+      }
+      return quarterTexts;
+    },
   },
 };

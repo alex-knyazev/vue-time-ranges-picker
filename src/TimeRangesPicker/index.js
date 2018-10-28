@@ -1,4 +1,9 @@
-import { VIEW_BOX_SIZE, DEFAULT_VIEW_OPTIONS } from '../core/consts';
+import {
+  VIEW_BOX_SIZE,
+  DEFAULT_VIEW_OPTIONS,
+  STEP_OF_MOVING,
+  EXTRA_POINTER_RADIUS,
+} from '../core/consts';
 import { timeTextToNumber, timeNumberToText } from '../core/helpers';
 import RangesController from '../core/RangesController';
 
@@ -26,6 +31,14 @@ export default {
       type: Boolean,
       default: () => false,
     },
+    stepOfMoving: {
+      type: Number,
+      default: () => STEP_OF_MOVING,
+    },
+    extraPointerRadius: {
+      type: Number,
+      default: () => EXTRA_POINTER_RADIUS,
+    },
     viewOptions: {
       type: Object,
       default: () => DEFAULT_VIEW_OPTIONS,
@@ -34,7 +47,6 @@ export default {
 
   data() {
     const viewBoxSize = VIEW_BOX_SIZE;
-
     return {
       viewBoxSize,
       innerValue: [],
@@ -63,13 +75,16 @@ export default {
         this.getInfoFromValue(newValue);
       },
     },
+    stepOfMoving(newValue) {
+      this.rangesController.setStepOfMoving(newValue);
+    },
   },
 
   methods: {
     timeNumberToText,
 
     getInfoFromValue(newValue) {
-      const { isTwelfthMode } = this;
+      const { isTwelfthMode, stepOfMoving } = this;
       const innerValue = newValue.map(range => {
         return {
           ...range,
@@ -77,7 +92,7 @@ export default {
           endTime: timeTextToNumber(range.endTime, isTwelfthMode),
         };
       });
-      const rangesController = new RangesController(innerValue, isTwelfthMode);
+      const rangesController = new RangesController(innerValue, stepOfMoving);
 
       this.innerValue = innerValue;
       this.rangesController = rangesController;
@@ -87,8 +102,13 @@ export default {
 
     handleStartMove(e) {
       const activePointName = e.target.id;
-      const pointer = this.rangesController.getPointer(activePointName);
-
+      let pointer = this.rangesController.getPointer(activePointName);
+      if (!pointer) {
+        pointer = this.tryToFindPointerNear(e);
+      }
+      if (!pointer) {
+        return;
+      }
       const inputCenterElement = this.$refs['input-center'];
       const { x: centerX, y: centerY } = inputCenterElement.getBoundingClientRect();
       this.rangesController.setBasicVector([centerX, centerY]);
@@ -124,6 +144,36 @@ export default {
         };
       });
       this.$emit('change', rangesData);
+    },
+
+    tryToFindPointerNear(e) {
+      const { clientX, clientY } = e;
+      const { movePointers } = this;
+      let nearPointersData = movePointers
+        .map(pointer => {
+          const { ref } = pointer;
+          const rect = ref.getBoundingClientRect();
+          const { x: pointerX, y: pointerY } = rect;
+          return {
+            pointer,
+            distance: Math.abs(clientX - pointerX) + Math.abs(clientY - pointerY),
+          };
+        })
+        .filter(({ distance }) => {
+          if (distance < this.extraPointerRadius) {
+            return true;
+          }
+        });
+
+      if (!nearPointersData.length) {
+        return;
+      }
+
+      let nearestPointerData = nearPointersData.sort((a, b) => {
+        return a.distance - b.distance;
+      })[0];
+
+      return nearestPointerData.pointer;
     },
   },
 };

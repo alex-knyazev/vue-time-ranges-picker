@@ -1,5 +1,7 @@
 .range-picker-container {
   height: 100%;
+
+  touch-action: none;
 }
 
 .circular-chart {
