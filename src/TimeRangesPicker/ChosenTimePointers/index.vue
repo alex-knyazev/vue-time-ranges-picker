@@ -21,16 +21,19 @@
         <g
           v-for="pointer in movePointers"
           :key="pointer.name + '-text'"
+		
           :style="{
-            transform: `rotate(${pointer.coordinates.degree}deg) translate(${circleRadius + 12}px, 0px )`
+            transform: `rotate(${pointer.coordinates.degree}deg) translate(${circleRadius + 12}px, 0px )`,
+            'transform-origin': '-7.8% -0.5%',
           }"
         >
           <text
+
             :style="{
-              'transform-origin': '7.8% -0.5%',
-              transform: `rotate(${-pointer.coordinates.degree}deg)`,
+              'transform-origin': '0 -0.5%',
               fill: chosenTimeColor
             }"
+            :transform="transformStyle(pointer.coordinates.degree)"
             class="chosen-time"
           >{{ timeNumberToText(pointer.time, isTwelfthMode) }}</text>
         </g>

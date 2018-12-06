@@ -45,8 +45,8 @@ export default {
       viewBoxSize: VIEW_BOX_SIZE,
       oneHourDegree: ONE_HOUR_DEGREE,
     };
-  },
-
+	},
+	
   mounted() {
     this.updateAbsoluteCoordinates();
   },
@@ -56,6 +56,11 @@ export default {
 
     handleStartMove(e) {
       this.$emit('startMove', e);
+    },
+
+    transformStyle(deg) {
+      let style = `rotate(${-deg} 0 0)`;
+      return style;
     },
 
     updateAbsoluteCoordinates() {

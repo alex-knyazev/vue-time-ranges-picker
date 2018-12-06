@@ -1,6 +1,6 @@
 .range-picker-container {
   height: 100%;
-
+	user-select: none;
   touch-action: none;
 }
 
@@ -9,6 +9,8 @@
 
   width: 100%;
   height: inherit;
-
-  user-select: none;
+	user-select: none;
+  -webkit-user-select: none;
 }
+
+
