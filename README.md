@@ -55,6 +55,8 @@ export default {
 </script>
 ```
 
+If you want to use pointer events in your project, then enable this script in the header of your html page https://code.jquery.com/pep/0.4.3/pep.js
+
 ## Props
 
 ### value :arrayOf(object)
