@@ -1,6 +1,6 @@
 # Vue-time-ranges-picker
 
-Vue.js component to select the time intervals of the day. 
+Vue.js component to select the time intervals of the day.
 
 Try it: https://alex-knyazev.github.io/vue-time-ranges-picker/
 
@@ -18,7 +18,7 @@ npm install vue-time-ranges-picker
 <template>
   <div>
     <div class="time-picker-wrapper">
-      <TimeRangesPicker
+      <VueTimeRangesPicker
         :value="ranges"
         @change="handleRangesChange"
       />
@@ -27,9 +27,13 @@ npm install vue-time-ranges-picker
 </template>
 
 <script>
-import TimeRangesPicker from 'time-ranges-picker';
+import VueTimeRangesPicker from 'vue-time-ranges-picker';
 
 export default {
+  components: {
+    VueTimeRangesPicker
+  },
+
   data() {
     return {
       ranges: [
@@ -53,6 +57,12 @@ export default {
   }
 }
 </script>
+
+<style>
+.time-picker-wrapper {
+  width: 300px;
+}
+</style>
 ```
 
 If you want to use pointer events in your project, then enable this script in the header of your html page https://code.jquery.com/pep/0.4.3/pep.js
@@ -120,3 +130,7 @@ npm run test
 ```
 npm run lint
 ```
+
+### How to build this module for npm
+
+https://medium.com/justfrontendthings/how-to-create-and-publish-your-own-vuejs-component-library-on-npm-using-vue-cli-28e60943eed3
