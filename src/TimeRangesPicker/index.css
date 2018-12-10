@@ -1,7 +1,8 @@
 .range-picker-container {
   height: 100%;
-	user-select: none;
+  user-select: none;
   touch-action: none;
+  -webkit-touch-callout: none;
 }
 
 .circular-chart {
@@ -9,8 +10,6 @@
 
   width: 100%;
   height: inherit;
-	user-select: none;
+  user-select: none;
   -webkit-user-select: none;
 }
-
-
