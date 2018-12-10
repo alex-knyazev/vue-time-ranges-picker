@@ -1,6 +1,6 @@
 {
   "name": "vue-time-ranges-picker",
-  "version": "0.9.81",
+  "version": "0.9.9",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
