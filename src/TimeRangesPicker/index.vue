@@ -12,20 +12,20 @@
       @mouseup="handleEndMove"
     >
       <!-- group with set of svg-paths drawing arcs -->
-      <RangesScales :ranges="ranges" :circleStrokeWidth="combinedViewOptions.circleStrokeWidth"></RangesScales>
+      <RangesScales :ranges="ranges" :circleStrokeWidth="combinedViewOptions.circleStrokeWidth"/>
 
       <!-- hours marks around circle -->
       <HoursMarks
         v-if="combinedViewOptions.isShowHoursMarks"
         :hoursMarksColor="combinedViewOptions.hoursMarksColor"
-      ></HoursMarks>
+      />
 
       <!-- quarter hours labels inside circle -->
       <QuartersTexts
         v-if="combinedViewOptions.isShowQuartersText"
         :isTwelfthMode="isTwelfthMode"
         :quarterTextColor="combinedViewOptions.quarterTextColor"
-      ></QuartersTexts>
+      />
 
       <!-- buttons on circle to change ranges -->
       <ChosenTimePointers
@@ -38,10 +38,10 @@
         :activePointerRadius="combinedViewOptions.activePointerRadius"
         :isShowChosenTime="combinedViewOptions.isShowChosenTime"
         @startMove="handleStartMove"
-      ></ChosenTimePointers>
+      />
 
       <!-- invisible element for moving angle detecting -->
-      <circle ref="input-center" :cx="viewBoxSize/2" :cy="viewBoxSize/2" r="0"></circle>
+      <circle ref="input-center" :cx="viewBoxSize/2" :cy="viewBoxSize/2" r="0"/>
     </svg>
   </div>
 </template>
