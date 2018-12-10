@@ -65,7 +65,7 @@ export default {
 </style>
 ```
 
-If you want to use pointer events in your project, then enable this script in the header of your html page https://code.jquery.com/pep/0.4.3/pep.js
+If you want to use this component in browser which doesn't support pointer events, then enable polyfill. For example,you can add this script in the header of your html page https://code.jquery.com/pep/0.4.3/pep.js
 
 ## Props
 
