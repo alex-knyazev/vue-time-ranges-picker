@@ -44,9 +44,16 @@ export default {
       circleRadius: CIRCLE_RADIUS,
       viewBoxSize: VIEW_BOX_SIZE,
       oneHourDegree: ONE_HOUR_DEGREE,
+      movePointersLength: 0,
     };
-	},
-	
+  },
+
+  beforeUpdate() {
+    if (this.movePointers.length !== this.movePointersLength) {
+      this.updateAbsoluteCoordinates();
+    }
+  },
+
   mounted() {
     this.updateAbsoluteCoordinates();
   },
@@ -65,6 +72,7 @@ export default {
 
     updateAbsoluteCoordinates() {
       for (let i = 0; i < this.movePointers.length; i++) {
+        this.movePointersLength = this.movePointers.length;
         const movePointer = this.movePointers[i];
         const refName = Object.keys(this.$refs).find(refName => {
           if (refName === movePointer.name) {

@@ -97,6 +97,20 @@ export default {
       this.innerValue = innerValue;
       this.rangesController = rangesController;
       this.ranges = rangesController.ranges;
+
+      const newMovePointers = rangesController.movePointers;
+      if (this.movePointers && this.movePointers.length == newMovePointers.length) {
+        newMovePointers.map(newMovePointer => {
+          const oldMovePointer = this.movePointers.find(movePointer => {
+            if (movePointer.name === newMovePointer.name) {
+              return true;
+            }
+          });
+          newMovePointer.setRef(oldMovePointer.ref);
+        });
+        return (this.movePointers = newMovePointers);
+      }
+
       this.movePointers = rangesController.movePointers;
     },
 
@@ -152,6 +166,7 @@ export default {
       let nearPointersData = movePointers
         .map(pointer => {
           const { ref } = pointer;
+
           const rect = ref.getBoundingClientRect();
           const { x: pointerX, y: pointerY } = rect;
           return {
